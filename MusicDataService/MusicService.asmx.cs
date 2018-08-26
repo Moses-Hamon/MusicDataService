@@ -21,13 +21,13 @@ namespace MusicDataService
     {
         const string QUERY_SELECT_ALL = "SELECT * FROM music";
         const string QUERY_SELECT_ONE = "SELECT * FROM music WHERE id = @id";
-        const string QUERY_INSERT = "INSERT INTO music (Track, Artist, Album, Genre, Duration) VALUES (@track, @artist, @album, @genre, @duration) WHERE Id=@id";
-        const string QUERY_UPDATE = "UPDATE music SET Track=@track, Artist=@artist, Album=@album, Genre=@genre, Duration=@duration WHERE Id=@id";
+        const string QUERY_INSERT = "INSERT INTO music (track,artist,album,genre,duration) VALUES (@track,@artist,@album,@genre,@duration)";
+        const string QUERY_UPDATE = "UPDATE music SET track=@track,artist=@artist,album=@album,genre=@genre,duration=@duration WHERE id=@id";
 
         [WebMethod]
-        public List<Music> SelectAll()
+        public List<MusicDataService.Model.Music> SelectAll()
         {
-            var db = Database.GetSQLiteConnection();
+            var db = MusicDataService.Model.Database.GetSQLiteConnection();
             return db.Query<Music>(QUERY_SELECT_ALL).ToList();
         }
 
@@ -38,24 +38,6 @@ namespace MusicDataService
             var param = new { id };
             return db.QuerySingle<Music>(QUERY_SELECT_ONE, param);
         }
-
-        //[WebMethod]
-        //public Music Update(string id)
-        //{
-            
-        //    var db = Database.GetSQLiteConnection().OpenAndReturn();
-        //    var trans = db.BeginTransaction();
-        //    try
-        //    {
-        //        var param = new { id };
-        //        db.Execute(QUERY_UPDATE, param, trans);
-        //        record
-        //    }
-        //    catch (Exception)
-        //    {
-        //        throw;
-        //    }
-        //}
 
         [WebMethod]
         public Music Save(Music record)
@@ -85,23 +67,7 @@ namespace MusicDataService
             return record;
         }
 
-        //[WebMethod]
-        //public void Insert(Music music)
-        //{
-        //    var db = Database.GetSQLiteConnection();
-        //    db.BeginTransaction();
-        //    try
-        //    {
-                
-        //    }
-        //    catch (Exception)
-        //    {
 
-        //        throw;
-        //    }
-        //}
+
     }
-
-
-
 }
